@@ -1,0 +1,53 @@
+
+.tilawah-subtitle{font:800 14px Nunito,Arial,sans-serif;color:#ffe7a5;margin-top:8px}
+.notice{background:#fff8e9;border-right:5px solid #edc55a;border-radius:13px;padding:12px 17px;margin-top:18px;color:#6f5d33;font-size:17px}
+.section-picker{margin-top:27px}
+.section-header{display:flex;align-items:end;justify-content:space-between;gap:15px;flex-wrap:wrap}
+.section-header h2{font-size:30px;margin:0;color:#134c5d}
+.section-header p{font:700 13px Nunito,Arial,sans-serif;margin:0;color:#65818b;text-align:left}
+.section-buttons{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px;margin-top:14px}
+.section-tab{width:100%;min-height:168px;text-align:right;border:2px solid #d9e7df;border-radius:20px;background:#fff;padding:18px 16px;box-shadow:0 6px 21px #1e697013;cursor:pointer;transition:box-shadow .2s,transform .2s,border-color .2s}
+.section-tab:hover,.section-tab:focus-visible{border-color:#a3c7b4;box-shadow:0 11px 25px #1e69702d;transform:translateY(-2px)}
+.section-tab.active{background:linear-gradient(135deg,#f0f9ee,#fffaf0);border-color:#159081;box-shadow:0 10px 29px #177c7130}
+.section-title{display:flex;justify-content:space-between;align-items:center;gap:6px;font-size:24px;font-weight:700}
+.section-title b{font-size:33px}
+.section-tab small{display:block;font:800 13px Nunito,Arial,sans-serif;color:#527b85}
+.section-score{font:900 22px Nunito,Arial,sans-serif;color:#136e6c;margin-top:10px;direction:ltr;text-align:right}
+.section-meter{background:#e9f0ed;height:8px;overflow:hidden;border-radius:10px;margin-top:8px}
+.section-meter span{display:block;height:100%;width:0;background:#20a18d}
+.module-intro{margin-top:22px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:15px 19px;box-shadow:0 6px 21px #176a670d}
+.module-intro h2{margin:0;font-size:30px;color:#1c5e68}
+.module-intro p{margin:2px 0 0;color:#678389;font-size:17px}
+.module-intro .badge{display:inline-block;margin-top:9px;border-radius:20px;background:#e6f4e8;padding:2px 13px;font:800 14px Nunito,Arial,sans-serif;color:#297456}
+.qtext{overflow-wrap:anywhere}
+.choice span:last-child{overflow-wrap:anywhere}
+.verse{font-family:'Noto Naskh Arabic','Traditional Arabic',serif;font-size:23px;line-height:1.8}
+.qcard{scroll-margin-top:18px}
+.guide{font-size:14px;display:block;color:#7c8990;margin-top:5px}
+@media(max-width:700px){.section-buttons{grid-template-columns:1fr}.section-tab{min-height:0;padding:12px 17px}.section-title{font-size:22px}.section-title b{font-size:27px}.section-score{margin-top:3px}.section-header h2{font-size:25px}}
+/* 60-soalan KAFAHERO upgrade */
+.section-buttons{grid-template-columns:repeat(2,minmax(0,1fr))}
+.topic-tab{width:100%;text-align:right;background:#fff;border:1px solid #d7e6df;border-radius:18px;padding:14px 18px;box-shadow:0 8px 24px #14667b13;cursor:pointer}
+.topic-tab.active{background:#e9f9f4;border-color:#238d7b;box-shadow:0 8px 20px #167a6e24}
+.topic-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.topic-top b{font-weight:700;font-size:24px}
+.topic-score{font:900 20px Nunito,Arial,sans-serif;color:#087c6b}
+.topic-desc{display:block;color:#567e80;font-size:18px}
+.topic-count{display:block;font-size:16px;margin-top:4px;color:#3b7773}
+.topic-meter{display:block;height:7px;background:#e2eeeb;border-radius:99px;overflow:hidden;margin-top:6px}
+.topic-meter i{display:block;height:100%;background:#1ba186;border-radius:99px}
+.filters{margin-top:14px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;background:#fff;border:1px solid #d9e7e3;border-radius:15px;padding:13px 18px}
+.filters label{font-size:18px;font-weight:700}
+.filters select{font-size:18px;background:#fff;border:1px solid #afcdc3;border-radius:10px;padding:2px 12px}
+.quiz-tools{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.quiz-tools button{border-radius:12px;border:1px solid #b8d8cf;padding:8px 15px;background:white;color:#216d67;font-size:18px}
+.quiz-tools button:hover{background:#eff7f3}
+.answer-option.correct{background:#e6f8eb;border-color:#2ca77b}
+.answer-option.incorrect{background:#fff0f0;border-color:#d79391}
+.choice input:disabled{cursor:default}.btn:disabled{cursor:default;opacity:.7}
+.feedback p{margin:6px 0 0}.qcard.done{border-color:#c4e5d5}
+.source-note{font-size:14px;color:#607b80;margin-top:24px;line-height:1.7}
+.source-note a{color:#127771}
+@media(max-width:700px){.section-buttons{grid-template-columns:1fr}.topic-top b{font-size:21px}.filters{align-items:start}.verse{font-size:22px}}
+
+.qtext{unicode-bidi:plaintext}.answer-option{unicode-bidi:plaintext}
