@@ -1,0 +1,25 @@
+/* Standalone sample quiz engine for KAFAHERO subjects, scored immediately per item. */
+(function(){'use strict';
+const KH=window.KAFAHERO;
+const root=document.getElementById('quiz-data'); if(!KH||!root)return;
+const D=JSON.parse(root.textContent), subject=D.id, profile=KH.getProfile();
+const KEY='kafahero:answers:v1:'+profile.id+':'+subject;
+const defaultState=()=>({answers:{},checked:{},subjective:{},grades:{},hints:{},samples:{}});
+let S=defaultState();try{S={...S,...(JSON.parse(localStorage.getItem(KEY)||'null')||{})}}catch(_){}
+const $=x=>document.querySelector(x);const esc=s=>String(s??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+const arab=n=>String(n).replace(/[0-9]/g,x=>'٠١٢٣٤٥٦٧٨٩'[+x]);
+function calc(){let obj=0,man=0,checked=0;D.mcq.forEach(q=>{if(S.checked[q.id]){checked++;if(S.answers[q.id]===q.correct)obj+=1}});D.written.forEach(q=>{if(Object.prototype.hasOwnProperty.call(S.grades,q.id)){checked++;man+=Number(S.grades[q.id])||0}});return{obj,man,score:obj+man,checked}};
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(_){ }const z=calc();KH.report(subject,{score:z.score,objective:z.obj,manual:z.man,checked:z.checked,totalQuestions:D.mcq.length+D.written.length});stats()}
+function stats(){let z=calc(),max=D.mcq.length+D.written.reduce((a,q)=>a+q.max,0);$('#score').textContent=z.score+' / '+max;$('#checked').textContent=arab(z.checked)+' / '+arab(D.mcq.length+D.written.length)+' سوءالن دسمق';$('#progress').style.width=(100*z.checked/(D.mcq.length+D.written.length))+'%';}
+function choices(q){return ['ا','ب','ج','د'].map(k=>`<label class="choice"><input type="radio" name="q-${q.id}" value="${k}" data-q="${q.id}" ${S.answers[q.id]===k?'checked':''}><span class="letter">${k}</span><span>${esc(q.options[k])}</span></label>`).join('')}
+function render(){let out=`<p class="intro">سوءالن موضوعي (٥ مرکه). جواب دان سمق ستياڤ سوءالن. مرکه اکن دکيرا ترُوس تَنڤ منوڠݢو تامات.</p>`;
+D.mcq.forEach((q,i)=>{let checked=!!S.checked[q.id],good=S.answers[q.id]===q.correct;out+=`<article class="qcard"><div class="qhead"><span class="number">${i+1} / ${D.mcq.length}</span><span class="points">١ مرکه</span></div><p class="qtext">${esc(q.q)}</p><div class="choices">${choices(q)}</div><div class="actions"><button type="button" class="btn primary" data-check="${q.id}">✓ سمق جواڤن</button></div>${checked?`<div class="feedback ${good?'good':'bad'}">${good?'✓ تاهنيه! جواڤن بتول.':'✕ بلوم تڤت. جواڤن بتول: '+esc(q.correct+' — '+q.options[q.correct])}</div>`:''}</article>`;});
+out+=`<p class="intro">سوءالن سوبجيکتيف (٤ مرکه). توليس جواڤن، بوک ڤتونجوق، کمودين منيلای دڠن بيمبيڠن ݢورو.</p><p class="notes">ڤنتيڠ: جواڤن بباس تيدق دسمق اوتوماتيک. مرکه بهاݢين اين مستي دماسوقکن اوليه ݢورو اتاو سماس سماکن سنديري.</p>`;
+D.written.forEach((q,i)=>{let hint=S.hints[q.id],sample=S.samples[q.id];out+=`<article class="qcard"><div class="qhead"><span class="number">${i+1} / ${D.written.length}</span><span class="points">${arab(q.max)} مرکه</span></div><p class="qtext">${esc(q.q)}</p><textarea class="answer" data-written="${q.id}" placeholder="توليس جواڤن د سيني ..." spellcheck="false">${esc(S.subjective[q.id]||'')}</textarea><div class="actions"><button type="button" class="btn hint" data-hint="${q.id}">💡 ${hint?'توتوڤ ڤتونجوق':'ليھت ڤتونجوق'}</button><button type="button" class="btn" data-sample="${q.id}">📖 ${sample?'توتوڤ چونتوه':'چونتوه جواڤن'}</button></div>${hint?`<div class="hintbox">💡 ${esc(q.hint)}</div>`:''}${sample?`<div class="samplebox">📖 ${esc(q.sample)}</div>`:''}<div class="grades"><label>مرکه ݢورو / سماکن سنديري:</label><select data-grade="${q.id}"><option value="">— بلوم دنيلاي —</option>${Array.from({length:q.max+1},(_,n)=>`<option value="${n}" ${String(S.grades[q.id])===String(n)?'selected':''}>${arab(n)} / ${arab(q.max)}</option>`).join('')}</select></div></article>`});
+$('#questions').innerHTML=out;stats();}
+$('#student').textContent=profile.name+(profile.kelas?' • '+profile.kelas:'');
+$('#questions').addEventListener('change',ev=>{const e=ev.target;if(e.dataset.q){S.answers[e.dataset.q]=e.value;delete S.checked[e.dataset.q];save();render()}else if(e.dataset.grade){if(e.value==='')delete S.grades[e.dataset.grade];else S.grades[e.dataset.grade]=+e.value;save();render()}});
+$('#questions').addEventListener('input',e=>{let id=e.target.dataset.written;if(id){S.subjective[id]=e.target.value;save()}});
+$('#questions').addEventListener('click',e=>{let b=e.target.closest('button');if(!b)return;if(b.dataset.check){let id=b.dataset.check;if(!S.answers[id]){alert('سيلا ڤيليه جواڤن دهولو.');return}S.checked[id]=true;save();render()}else if(b.dataset.hint){let id=b.dataset.hint;S.hints[id]=!S.hints[id];save();render()}else if(b.dataset.sample){let id=b.dataset.sample;S.samples[id]=!S.samples[id];save();render()}});
+render();save();
+})();
