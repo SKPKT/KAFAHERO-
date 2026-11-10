@@ -51,3 +51,61 @@
 @media(max-width:700px){.section-buttons{grid-template-columns:1fr}.topic-top b{font-size:21px}.filters{align-items:start}.verse{font-size:22px}}
 
 .qtext{unicode-bidi:plaintext}.answer-option{unicode-bidi:plaintext}
+
+/* Keep option markers (ا، ب، ج، د) visibly separate from Jawi answer text. */
+#questions .answer-option{
+  display:grid;
+  grid-template-columns:24px 42px minmax(0,1fr);
+  align-items:center;
+  column-gap:16px;
+  direction:rtl;
+  text-align:right;
+  min-height:64px;
+  padding:10px 16px;
+  border:1px solid #d9e7e2;
+  border-radius:13px;
+  background:#fff;
+  cursor:pointer;
+}
+#questions .answer-option:hover,
+#questions .answer-option:has(input:checked){
+  background:#eef9f4;
+  border-color:#62b7a5;
+}
+#questions .answer-option.correct{background:#e6f8eb;border-color:#2ca77b}
+#questions .answer-option.incorrect{background:#fff0f0;border-color:#d79391}
+#questions .answer-option input[type="radio"]{
+  width:20px;
+  height:20px;
+  margin:0;
+  accent-color:#157f77;
+}
+#questions .answer-option .answer-letter{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:42px;
+  height:42px;
+  border-radius:12px;
+  background:#e3f4ee;
+  color:#166d63;
+  font-weight:700;
+  font-size:23px;
+  line-height:1;
+  flex-shrink:0;
+}
+#questions .answer-option span:last-child{
+  min-width:0;
+  overflow-wrap:anywhere;
+  font-size:22px;
+  line-height:1.8;
+}
+@media(max-width:600px){
+  #questions .answer-option{
+    grid-template-columns:22px 40px minmax(0,1fr);
+    column-gap:14px;
+    padding:10px 12px;
+  }
+  #questions .answer-option .answer-letter{width:40px;height:40px}
+  #questions .answer-option span:last-child{font-size:21px}
+}
